@@ -79,9 +79,7 @@ include "includes/header.php";
 	echo "Hi there, ";
 	} ?>
 				<?=$obj->first?> <?=$obj->last?></h1>
-				<p style='color:grey'>@
-					<?=$obj->uname?>
-				</p>
+				<p style='color:grey'>@<?=$obj->uname?></p>
 				<div class='row'>
 					<div class='col-md-3'>
 						<h4>Profile</h4>
@@ -110,7 +108,9 @@ include "includes/header.php";
 								<p id='email'>
 									<?=$obj->email?>
 								</p>
-								<p id='uname'>@<?=$obj->uname?></p>
+								<p id='uname'>@
+									<?=$obj->uname?>
+								</p>
 								<p id='bio'>Bio:
 									<?=$obj->bio?>
 								</p>
@@ -136,39 +136,40 @@ include "includes/header.php";
 					<div class='col-md-6'>
 						<!--<div class='row'>
 							<div class='col-md-12'>-->
-								<div class='panel panel-default text-left'>
-									<div class='panel-body'>
-										<div class='form-group'>
-											<form action='<?=postCheet($connection, $obj_users)?>' method='POST'>
-												<?php if ($_SESSION['id']===$uid){?>
-												<textarea id='cheet' maxlength='200' oninput='checkInput(this)' class='form-control' rows='3' name='cheet' placeholder='How are you?' required></textarea>
-												<?php }else{?>
-												<textarea id='cheet' maxlength='200' oninput='checkInput(this)' class='form-control' rows='3' name='cheet' required>@<?=$obj->uname?></textarea>
-												<?php }
+						<div class='panel panel-default text-left'>
+							<div class='panel-body'>
+								<div class='form-group'>
+									<form action='<?=postCheet($connection, $obj_users)?>' method='POST'>
+										<?php if ($_SESSION['id']===$uid){?>
+										<textarea id='cheet' maxlength='200' oninput='checkInput(this)' class='form-control' rows='3' name='cheet' placeholder='How are you?' required></textarea>
+										<?php }else{?>
+										<textarea id='cheet' maxlength='200' oninput='checkInput(this)' class='form-control' rows='3' name='cheet' required>@<?=$obj->uname?></textarea>
+										<?php }
 if ($posted == 1){?>
-												<div class='alert alert-success alert-dismissable fade in'>
-													<a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a>
-													<strong>Success!</strong> You posted chit.
-												</div>
-												<?php } ?>
-												<button class='btn btn-info' type='submit' name='cheetsubmit'>Post chit</button>
-												<span id='remaining'>200 characters remaining</span>
-											</form>
-										<!--</div>
+										<div class='alert alert-success alert-dismissable fade in'>
+											<a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a>
+											<strong>Success!</strong> You posted chit.
+										</div>
+										<?php } ?>
+										<button class='btn btn-info' type='submit' name='cheetsubmit'>Post chit</button>
+										<span id='remaining'>200 characters remaining</span>
+									</form>
+									<!--</div>
 									</div>-->
 								</div>
 							</div>
 						</div>
 						<?=getCheets($connection, $obj_users, $result_cheets, $actual_link)?>
 					</div>
+				</div>
 				<div class='col-md-3'>
 					<div class='list-group'>
 						<h4>Popular users</h4>
 						<?=popularUsers($connection, $actual_link)?>
-							</div>
-							</div>
-							<!--Footer-->
-							<?php
+					</div>
+				</div>
+				<!--Footer-->
+				<?php
 include "includes/footer.php";
 
 ?>
