@@ -1,0 +1,23 @@
+.nav li{
+  float:left;
+}
+.nav li:hover{
+  border-bottom-style: solid;
+}
+.container{
+  margin-top: 15vh;
+  margin-left: 5vw;
+  width: 40vw;
+  float: left;
+  z-index:1;
+}
+.team{
+  float:right;
+  margin-top:15vh;
+  margin-right:5vw;
+  width:40vw;
+}
+footer{
+  position:absolute;
+  bottom:0;
+}
