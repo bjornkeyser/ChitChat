@@ -127,7 +127,7 @@ echo $string."</p >";
       </div>";
       }
 		}
-      echo "</div>";
+      echo "</div></div>";
   }
 function popularUsers($connection, $actual_link){
   include 'connect.php';
