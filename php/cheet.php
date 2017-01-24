@@ -55,7 +55,7 @@ function postCheet($connection, $obj_users){
     header("Location: ../profile.php?uid=".$_SESSION["id"]."&posted=1");
   }
 }
-$query_cheets = "select * from cheets left join tags on cheets.cid = tags.cid join users on users.id = cheets.uid where uid= ".$obj_users->id." or tags.tag = '".$obj_users->uname."' order by cheets.date desc";
+$query_cheets = "select *, cheets.cid as cheetid from cheets left join tags on cheets.cid = tags.cid join users on users.id = cheets.uid where uid= ".$obj_users->id." or tags.tag = '".$obj_users->uname."' order by cheets.date desc";
 $result_cheets = mysqli_query($connection, $query_cheets);
 
 function getCheets($connection, $obj_users, $result_cheets, $actual_link){
@@ -81,16 +81,16 @@ function getCheets($connection, $obj_users, $result_cheets, $actual_link){
 		}
 $string = implode(" ",$arr);
 echo $string."</p >";
-			echo "cid=".$obj_cheets->cid.$likes."
+			echo "
       <form style='display: inline' action='php/like.php' method='POST'>
 				".$obj_cheets->likes."
-				<input type='hidden' value='".$obj_cheets->cid."' name ='cid'>
+				<input type='hidden' value='".$obj_cheets->cheetid."' name ='cid'>
 				<input type='hidden' value='".$actual_link."' name ='link'>
 				<button name='likebtn' type='submit' class='btn' style='border:none'><i class='fa fa-thumbs-o-up'></i></button>
 			</form>
       <form style='display: inline' action='php/dislike.php' method='POST'>
 				".$obj_cheets->dislikes."
-				<input type='hidden' value='".$obj_cheets->cid."' name ='cid'>
+				<input type='hidden' value='".$obj_cheets->cheetid."' name ='cid'>
 				<input type='hidden' value='".$actual_link."' name ='link'>
 				<button name='dislikebtn' type='submit' class='btn' style='border:none'><i class='fa fa-thumbs-o-down'></i></button>
 			</form>
@@ -100,7 +100,7 @@ echo $string."</p >";
       echo "<div class='media-right'>
       <a href='' data-toggle='modal' data-target='#editModal'>Edit</a>
       <form action ='php/deletechit.php' method='POST'>
-        <input type='hidden' value='".$obj_cheets->cid."' name ='cid'></input>
+        <input type='hidden' value='".$obj_cheets->cheetid."' name ='cid'></input>
         <button class='btn btn-info' name='deletechit' type='submit'>Delete</button>
       </form>
        <div id='editModal' class='modal fade' role='dialog'>
@@ -114,7 +114,7 @@ echo $string."</p >";
             <div class='modal-body'>
               <form action='php/editchit.php' method='POST'>
               <input type='text' name='newContent'></input>
-              <input type='hidden' value='".$obj_cheets->cid."' name='cid'></input>
+              <input type='hidden' value='".$obj_cheets->cheetid."' name='cid'></input>
               <button type='submit' class='btn btn-info'>Edit</button>
               </form>
             </div>
@@ -123,6 +123,7 @@ echo $string."</p >";
       </div>
     </div>
   </div>
+</div>
 </div>
       </div>";
       }
@@ -164,8 +165,9 @@ function popularUsers($connection, $actual_link){
 function trendingTopic($connection){
 	include 'connect.php';
 	echo"Last few days";
-	$query_trending = "SELECT COUNT(hashtag) AS count, hashtag FROM hashtags JOIN cheets ON cheets.cid = hashtags.cid WHERE date >= curdate() - INTERVAL DAYOFWEEK(curdate())+1 DAY
-AND date <= curdate() GROUP BY hashtag ORDER BY count DESC LIMIT 5";
+	//$query_trending = "SELECT COUNT(hashtag) AS count, hashtag FROM hashtags JOIN cheets ON cheets.cid = hashtags.cid WHERE date >= curdate() - INTERVAL DAYOFWEEK(curdate())+1 DAY
+//AND date <= curdate() GROUP BY hashtag ORDER BY count DESC LIMIT 5";
+	$query_trending = "SELECT COUNT(hashtag) AS count, hashtag FROM hashtags JOIN cheets ON cheets.cid = hashtags.cid GROUP BY hashtag ORDER BY count DESC LIMIT 5";
 	$result_trending = mysqli_query($connection, $query_trending);
 	while ($obj_trending = mysqli_fetch_object($result_trending)){ ?>
 		<a href='http://chitchatonline.esy.es/php/search.php?htag=<?php echo $obj_trending->hashtag; ?>&uid=<?php echo $_SESSION['id'] ?>&tt=1'>
