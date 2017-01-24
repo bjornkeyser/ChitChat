@@ -27,36 +27,8 @@ if (!$obj = mysqli_fetch_object($result))
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<link href="bootstrap-tour.min.css" rel="stylesheet">
 		<script src="bootstrap.min.js"></script>
-		<script src="../tour.js"></script>
-		<script>
-			function updateCountdown() {
-				// 140 is the max message length
-				//var remaining = 200 - jQuery('#message').val().length;
-				//jQuery('#remaining').text(remaining + ' characters remaining.');
-			}
-			$(document).ready(function() {
-						$("#changeProfile").click(function() {
-							$("#changeProfile").replaceWith("<button class='btn btn-info' type='submit'>Save</button><a href='profile.php?uid=<?= $_SESSION['id'] ?>'>Cancel</a>");
-							$("#profilePic").replaceWith("<img src='<?=$obj->img?>' id='profilePic' class='img-circle' height='65' width='65' alt='Avatar'><br><form action='php/upload.php' method='POST' enctype='multipart/form-data'>Select image to upload:<input type='file' name='fileToUpload' id='fileToUpload'><input type='submit' value='Upload Image' name='submit'></form'");
-							$("#fullName").replaceWith("");
-							$("#email").replaceWith("<input placeholder='First name' value='<?= $obj->first ?>' name='first'></input><br><input placeholder='Last name' value='<?= $obj->last ?>' name='last'></input><br><input placeholder='Email' value='<?= $obj->email ?>' name='email'></input>");
-							$("#uname").replaceWith("<input placeholder='Username' value='<?= $obj->uname ?>' name='uname'></input>");
-							$("#bio").replaceWith("<input placeholder='Bio' value='<?= $obj->bio ?>' name='bio'></input>");
-
-
-						});
-						/*$("#followers").click(function(){
-				$("#followers").replaceWith("<?php echo $obj_followers_users->uname ?>");
-    });
-		$("#following").click(function(){
-				$("#following").replaceWith("<?php echo $obj_following_users->uname ?>");
-    });
-		updateCountdown();
-    $('#message').change(updateCountdown);
-    $('#message').keyup(updateCountdown);
-});
-		</script>
-	</head>
+		
+			</head>
 
 	<body>
 		<script>
@@ -108,9 +80,7 @@ include "includes/header.php";
 								<p id='email'>
 									<?=$obj->email?>
 								</p>
-								<p id='uname'>@
-									<?=$obj->uname?>
-								</p>
+								<p id='uname'>@<?=$obj->uname?></p>
 								<p id='bio'>Bio:
 									<?=$obj->bio?>
 								</p>
@@ -173,6 +143,19 @@ if ($posted == 1){?>
 include "includes/footer.php";
 
 ?>
+		
+		<script>
+			$(function() {
+						$("#changeProfile").on("click", function() {
+							$(this).replaceWith("<button class='btn btn-info' type='submit'>Save</button><a href='profile.php?uid=<?= $_SESSION['id'] ?>'>Cancel</a>");
+							$("#profilePic").replaceWith("<img src='<?=$obj->img?>' id='profilePic' class='img-circle' height='65' width='65' alt='Avatar'><br><form action='php/upload.php' method='POST' enctype='multipart/form-data'>Select image to upload:<input type='file' name='fileToUpload' id='fileToUpload'><input type='submit' value='Upload Image' name='submit'></form'");
+							$("#fullName").replaceWith("");
+							$("#email").replaceWith("<input placeholder='First name' value='<?= $obj->first ?>' name='first'></input><br><input placeholder='Last name' value='<?= $obj->last ?>' name='last'></input><br><input placeholder='Email' value='<?= $obj->email ?>' name='email'></input>");
+							$("#uname").replaceWith("<input placeholder='Username' value='<?= $obj->uname ?>' name='uname'></input>");
+							$("#bio").replaceWith("<input placeholder='Bio' value='<?= $obj->bio ?>' name='bio'></input>");
+						});
+			});
+		</script>
 	</body>
 
 	</html>
